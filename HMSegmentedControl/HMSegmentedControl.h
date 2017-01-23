@@ -224,6 +224,17 @@ typedef NS_ENUM(NSInteger, HMSegmentedControlType) {
 @property (nonatomic, readwrite) UIEdgeInsets enlargeEdgeInset;
 
 /**
+ First element padding.
+
+ Additional padding on the left of the first element (e.g. for alignment) if any.
+
+ Known issues: implementation/testing of this is done only when style of the control is
+ dynamic text.
+ */
+@property (nonatomic, readwrite) CGFloat firstSegmentLeftPadding;
+
+
+/**
  Default is YES. Set to NO to disable animation during user selection.
  */
 @property (nonatomic) BOOL shouldAnimateUserSelection;

@@ -136,6 +136,7 @@
 
     self.selectedSegmentIndex = 0;
     self.segmentEdgeInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    self.firstSegmentLeftPadding = 0;
     self.selectionIndicatorHeight = 5.0f;
     self.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
     self.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
@@ -331,7 +332,13 @@
             }
             titleLayer.string = [self attributedTitleAtIndex:idx];
             titleLayer.contentsScale = [[UIScreen mainScreen] scale];
-            
+
+            if (idx == 0) {
+                CGRect f = titleLayer.frame;
+                f.origin.x += self.firstSegmentLeftPadding;
+                titleLayer.frame = f;
+            }
+
             [self.scrollView.layer addSublayer:titleLayer];
             
             // Vertical Divider
@@ -638,7 +645,8 @@
         
         [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
             CGFloat stringWidth = [self measureTitleAtIndex:idx].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
-            [mutableSegmentWidths addObject:[NSNumber numberWithFloat:stringWidth]];
+            CGFloat padding = (idx == 0) ? self.firstSegmentLeftPadding : 0;
+            [mutableSegmentWidths addObject:@(stringWidth + padding)];
         }];
         self.segmentWidthsArray = [mutableSegmentWidths copy];
     } else if (self.type == HMSegmentedControlTypeImages) {
