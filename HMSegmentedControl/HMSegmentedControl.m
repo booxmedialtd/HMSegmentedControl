@@ -600,9 +600,17 @@
                     selectedSegmentOffset = selectedSegmentOffset + [width floatValue];
                     i++;
                 }
-                return CGRectMake(selectedSegmentOffset + self.selectionIndicatorEdgeInsets.left, indicatorYOffset, [[self.segmentWidthsArray objectAtIndex:self.selectedSegmentIndex] floatValue] - self.selectionIndicatorEdgeInsets.right, self.selectionIndicatorHeight + self.selectionIndicatorEdgeInsets.bottom);
+
+                CGFloat segmentWidth = 0;
+                if (self.segmentWidthsArray.count > self.selectedSegmentIndex)
+                    segmentWidth = [[self.segmentWidthsArray objectAtIndex:self.selectedSegmentIndex] floatValue];
+
+                return CGRectMake(selectedSegmentOffset + self.selectionIndicatorEdgeInsets.left,
+                                  indicatorYOffset,
+                                  segmentWidth - self.selectionIndicatorEdgeInsets.right,
+                                  self.selectionIndicatorHeight + self.selectionIndicatorEdgeInsets.bottom);
             }
-            
+
             return CGRectMake((self.segmentWidth + self.selectionIndicatorEdgeInsets.left) * self.selectedSegmentIndex, indicatorYOffset, self.segmentWidth - self.selectionIndicatorEdgeInsets.right, self.selectionIndicatorHeight);
         }
     }
